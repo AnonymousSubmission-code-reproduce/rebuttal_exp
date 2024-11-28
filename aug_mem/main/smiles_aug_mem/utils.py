@@ -181,23 +181,25 @@ def get_randomized_smiles(task_name, lm_name, mol_lm, bin_size, smiles_list, pri
                     editted_smi.append(smiles)
             else:
                 editted_smi.append(smiles)
-    for idx, smiles in enumerate(smiles_list):
+    smi_idx = 0
+    for idx, smiles in enumerate(editted_smi):
         
-
+        
         try:
             #randomized_smiles = randomize_smiles(mol)
             # there may be tokens in the randomized SMILES that are not in the Vocabulary
             #check if the randomized SMILES can be encoded
-            if idx < len(editted_smi):
-                randomized_smiles = editted_smi[idx]
-                tokens = _ST.tokenize(randomized_smiles)
-                encoded = prior.vocabulary.encode(tokens)
-                randomized_smiles_list.append(randomized_smiles)
-            else:
-                randomized_smiles_list.append(smiles)
+            
+            randomized_smiles = smiles
+            tokens = _ST.tokenize(randomized_smiles)
+            encoded = prior.vocabulary.encode(tokens)
+            randomized_smiles_list.append(randomized_smiles)
         except KeyError:
-            randomized_smiles_list.append(smiles)
-
+            if smi_idx < len(smiles_list):
+                randomized_smiles_list.append(smiles_list[smi_idx])
+                smi_idx = smi_idx + 1
+    random.shuffle(randomized_smiles_list)
+    randomized_smiles_list = randomized_smiles_list[:len(smiles_list)]
 
     return randomized_smiles_list
 
