@@ -8,7 +8,7 @@ Augmented memory is implemented based on https://github.com/wenhao-gao/mol_opt/t
 To run augmented memory (example):
 ```bash
 cd aug_mem
-python run.py smiles_aug_mem --oracles qed --mol_lm BioT5 --seeds 15
+python run.py smiles_aug_mem --oracles qed --mol_lm BioT5 --seed 15
 ```
 
 To run genetic GFN (example):
